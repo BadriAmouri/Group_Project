@@ -66,9 +66,7 @@ const handleSignIn = (event) => {
       <CssBaseline />
       <Grid item xs={12} sm={8} md={5} component={PaperContainer} elevation={6} square>
         <div className="Sign_up">
-        <AvatarStyled>
-          <LockOutlinedIcon />
-        </AvatarStyled>
+        
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
@@ -84,13 +82,21 @@ const handleSignIn = (event) => {
   autoComplete="email"
   autoFocus
   sx={{
+    backgroundColor: 'white', // Ensures white background
     '& .MuiOutlinedInput-root': {
       '& fieldset': {
-        borderColor: 'black', // Change border color if necessary
-      }
+        borderColor: 'black',
+      },
+      '&:hover fieldset': {
+        borderColor: 'black',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: 'black',
+      },
     },
   }}
 />
+
 
           <TextField
             variant="outlined"

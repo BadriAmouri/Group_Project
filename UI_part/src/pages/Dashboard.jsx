@@ -90,7 +90,7 @@ const Dashboard = () => {
 
   return (
     <Box sx={{ pt: "80px", pb: "20px" }}>
-      <Typography variant="h6" sx={{ marginBottom: "14px" }}>
+      <Typography variant="h6" sx={{ marginBottom: "14px" ,fontFamily: 'Futura' }} >
         Welcome Back Taher
       </Typography>
       <ComponentWrapper>
@@ -107,7 +107,7 @@ const Dashboard = () => {
       
 
       <ComponentWrapper>
-        <Typography variant="h5" sx={{ my: 3 }}>
+        <Typography variant="h5" sx={{ my: 3 , fontFamily : "Futura" }}>
           Employees Attendence
         </Typography>
         <Table
