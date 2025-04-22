@@ -34,54 +34,7 @@ const Navbar = ({ sideBarWidth, handleDrawerToggle }) => {
       }}
     >
       <Toolbar>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            width: "100%",
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: 1,
-            }}
-          >
-            <Tooltip title="Menu" arrow>
-              <IconButton
-                aria-label="open drawer"
-                edge="start"
-                onClick={handleDrawerToggle}
-                sx={{ mr: 2, display: { md: "none" } }}
-              >
-                <FiMenu />
-              </IconButton>
-            </Tooltip>
-
-            <Typography
-              variant="h5"
-              sx={{ display: { xs: "none", sm: "block" } }}
-            >
-              Dashboard
-            </Typography>
-          </Box>
-          <Stack direction="row" spacing={1} alignItems="center">
-            
-            <Tooltip title="Toggle Theme" arrow>
-              <IconButton
-                onClick={colorMode.toggleColorMode}
-                sx={{ fontSize: "20px", color: "text.primary" }}
-              >
-                {currentTheme === "light" ? <FiMoon /> : <FiSun />}
-              </IconButton>
-            </Tooltip>
-
-            <ProfileMenu />
-          </Stack>
-        </Box>
-      </Toolbar>
+       </Toolbar>
     </AppBar>
   );
 };

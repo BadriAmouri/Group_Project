@@ -53,7 +53,7 @@ export const links = [
   
   
   {
-    name: "Settings",
+    name: "Project Generated",
     icon: <FiSettings />,
     url: "/settings",
  },

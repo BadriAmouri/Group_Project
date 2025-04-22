@@ -11,45 +11,97 @@ import {
   Select,
   TextField,
   Typography,
+  Slider,
+  Switch,
 } from "@mui/material";
 
 const ProjectForm = () => {
   const [formData, setFormData] = useState({
-    location: "",
+    projectType: "",
+    shift: "4x4",
+    duration: "",
     startDate: "",
     endDate: "",
-    interdependencies: "yes",
-    technology: "",
-    shift: "4x4",
-    rolesNeeded: "",
+    depth: "",
+    geologicalComplexity: "",
+    volumeEstimate: "",
+    riskLevel: 0.5,
+    hasAutomation: false,
+    projectBudget: "",
+    waterTreatment: false,
   });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const { name, value, type, checked } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  };
+
+  const handleSliderChange = (_, newValue) => {
+    setFormData((prev) => ({
+      ...prev,
+      riskLevel: newValue,
+    }));
   };
 
   return (
-    <Box sx={{ maxWidth: 900, mx: "auto", p: 3,mt:10, bgcolor: "#000000", borderRadius: 2 }}>
-      <Typography variant="h4" fontWeight="bold" mb={2} >Title</Typography>
-      
+    <Box   className="font-futura" 
+    sx={{ maxWidth: 'full', mx: "auto", p: 3, mt: 10, bgcolor: "#000000", borderRadius: 2 }}>
+      <Typography variant="h4" sx={{ fontFamily: 'Futura' }}  fontWeight="bold" mb={2} color="white">Create Project</Typography>
+
+      {/* Project Type */}
+      <FormControl fullWidth margin="normal">
+        <InputLabel style={{ color: 'white' }}>Project Type</InputLabel>
+        <Select
+          name="projectType"
+          value={formData.projectType}
+          onChange={handleChange}
+          sx={{ color: 'white', '.MuiSvgIcon-root': { color: 'white' } }}
+        >
+          <MenuItem value="Exploration">Exploration</MenuItem>
+          <MenuItem value="Exploitation">Exploitation</MenuItem>
+          <MenuItem value="Development">Development</MenuItem>
+          <MenuItem value="Workover">Workover</MenuItem>
+          <MenuItem value="Appraisal">Appraisal</MenuItem>
+        </Select>
+      </FormControl>
+
+      {/* Shifts */}
+      <FormControl fullWidth margin="normal">
+        <InputLabel style={{ color: 'white' }}>Shift</InputLabel>
+        <Select
+          name="shift"
+          value={formData.shift}
+          onChange={handleChange}
+          sx={{ color: 'white', '.MuiSvgIcon-root': { color: 'white' } }}
+        >
+          <MenuItem value="4x4">4x4</MenuItem>
+          <MenuItem value="3x6">3x6</MenuItem>
+        </Select>
+      </FormControl>
+
+      {/* Duration */}
       <TextField
         fullWidth
-        label="Location"
-        name="location"
-        value={formData.location}
+        label="Duration (days)"
+        name="duration"
+        type="number"
+        value={formData.duration}
         onChange={handleChange}
         margin="normal"
         InputLabelProps={{ style: { color: 'white' } }}
         InputProps={{ style: { color: 'white' } }}
       />
 
+      {/* Start and End Date */}
       <Box display="flex" gap={2}>
         <TextField
           fullWidth
-          label="Start Date"
+          label="Start Date (YYYY-MM)"
           name="startDate"
-          type="text"
+          type="month"
           value={formData.startDate}
           onChange={handleChange}
           margin="normal"
@@ -58,9 +110,9 @@ const ProjectForm = () => {
         />
         <TextField
           fullWidth
-          label="End Date"
+          label="End Date (YYYY-MM)"
           name="endDate"
-          type="text"
+          type="month"
           value={formData.endDate}
           onChange={handleChange}
           margin="normal"
@@ -69,49 +121,96 @@ const ProjectForm = () => {
         />
       </Box>
 
-      <Typography variant="body1" fontWeight="bold" mt={2} color="white">Interdependencies</Typography>
-      <RadioGroup
-        row
-        value={formData.interdependencies}
+      {/* Depth */}
+      <TextField
+        fullWidth
+        label="Depth (m)"
+        name="depth"
+        type="number"
+        value={formData.depth}
         onChange={handleChange}
-        name="interdependencies"
-      >
-        <FormControlLabel value="yes" control={<Radio color="warning" />} label={<Typography color="white">Yes</Typography>} />
-        <FormControlLabel value="no" control={<Radio />} label={<Typography color="white">No</Typography>} />
-      </RadioGroup>
+        margin="normal"
+        InputLabelProps={{ style: { color: 'white' } }}
+        InputProps={{ style: { color: 'white' } }}
+      />
 
+      {/* Geological Complexity */}
       <FormControl fullWidth margin="normal">
-        <InputLabel style={{ color: 'white' }}>Technology</InputLabel>
+        <InputLabel style={{ color: 'white' }}>Geological Complexity</InputLabel>
         <Select
-          name="technology"
-          value={formData.technology}
+          name="geologicalComplexity"
+          value={formData.geologicalComplexity}
           onChange={handleChange}
           sx={{ color: 'white', '.MuiSvgIcon-root': { color: 'white' } }}
         >
-          <MenuItem value="React">React</MenuItem>
-          <MenuItem value="Angular">Angular</MenuItem>
-          <MenuItem value="Vue">Vue</MenuItem>
+          <MenuItem value="Low">Low</MenuItem>
+          <MenuItem value="Medium">Medium</MenuItem>
+          <MenuItem value="High">High</MenuItem>
         </Select>
       </FormControl>
 
-      <Box display="flex" gap={2} alignItems="center">
-        <FormControl fullWidth>
-          <InputLabel style={{ color: 'white' }}>Roles Needed</InputLabel>
-          <Select
-            name="rolesNeeded"
-            value={formData.rolesNeeded}
-            onChange={handleChange}
-            sx={{ color: 'white', '.MuiSvgIcon-root': { color: 'white' } }}
-          >
-            <MenuItem value="Developer">Developer</MenuItem>
-            <MenuItem value="Designer">Designer</MenuItem>
-            <MenuItem value="Manager">Manager</MenuItem>
-          </Select>
-        </FormControl>
-        <Button variant="contained" color="inherit">+</Button>
+      {/* Volume Estimate */}
+      <TextField
+        fullWidth
+        label="Volume Estimate"
+        name="volumeEstimate"
+        type="number"
+        value={formData.volumeEstimate}
+        onChange={handleChange}
+        margin="normal"
+        InputLabelProps={{ style: { color: 'white' } }}
+        InputProps={{ style: { color: 'white' } }}
+      />
+
+      {/* Risk Level */}
+      <Box mt={3}>
+        <Typography sx={{ fontFamily: 'Futura' }} color="white" gutterBottom>Risk Level: {formData.riskLevel}</Typography>
+        <Slider
+          value={formData.riskLevel}
+          min={0}
+          max={1}
+          step={0.01}
+          onChange={handleSliderChange}
+          sx={{ color: '#fbc02d' }}
+        />
       </Box>
 
-      <Button fullWidth variant="contained" color="warning" sx={{ mt: 3 }}>
+      {/* Automation */}
+      <Box mt={2} display="flex" alignItems="center" gap={2}>
+        <Typography sx={{ fontFamily: 'Futura' }} color="white">Has Automation</Typography>
+        <Switch
+          name="hasAutomation"
+          checked={formData.hasAutomation}
+          onChange={handleChange}
+          color="warning"
+        />
+      </Box>
+
+      {/* Budget */}
+      <TextField
+        fullWidth
+        label="Project Budget ($)"
+        name="projectBudget"
+        type="number"
+        value={formData.projectBudget}
+        onChange={handleChange}
+        margin="normal"
+        InputLabelProps={{ style: { color: 'white' } }}
+        InputProps={{ style: { color: 'white' } }}
+      />
+
+      {/* Water Treatment */}
+      <Box mt={2} display="flex" alignItems="center" gap={2}>
+        <Typography color="white" sx={{ fontFamily: 'Futura' }}>Water Treatment</Typography>
+        <Switch
+          name="waterTreatment"
+          checked={formData.waterTreatment}
+          onChange={handleChange}
+          color="warning"
+        />
+      </Box>
+
+      <Button fullWidth variant="contained" color="warning" sx={{ fontFamily: 'Futura' ,mt: 4}}  >
         Create Project
       </Button>
     </Box>

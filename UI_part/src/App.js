@@ -1,24 +1,31 @@
 import * as React from "react";
-import { Routes, Route, useLocation, Navigate } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Sidebar from "./components/common/Sidebar";
 import Dashboard from "./pages/Dashboard";
 import Navbar from "./components/common/Navbar";
+import Home from "./Client/page";
+
 import {
   AddProduct,
-  Customers,
-  Inbox,
   Orders,
   Products,
-  Settings,
   SingleCustomer,
   SingleOrder,
   SingleProduct,
 } from "./pages";
-import SignInSide from "./pages/SignIn";
+
+
 import UserProfilePage from "./pages/User_Page";
 import ProjectForm from "./pages/Customers";
-const sideBarWidth = 250;  // 250 ( make it dynamic from 0 to 250 )
+import ProjectDetails from "./pages/Settings";
+import SearchProjects from "./pages/Inbox";
+import ProjectInfo from "./Client/project/page";
+import About from "./Client/about/page";
+import Contact from "./Client/contact/page";
+import AuthForm from "./Client/Signin/page";
+
+const sideBarWidth = 250; // Sidebar width (can be made dynamic)
 
 function App() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -28,35 +35,44 @@ function App() {
     setMobileOpen(!mobileOpen);
   };
 
-  const hideNavAndSidebar = location.pathname === "/sign" || location.pathname === "/user_view";
+  // Hide Sidebar (and Navbar if needed) on specific routes
+  const hideNavAndSidebar =
+    location.pathname === "/" ||
+    location.pathname === "/sign" ||
+    location.pathname === "/user_view" ||
+    location.pathname === "/Client/project" ||
+    location.pathname === "/Client/About" || 
+    location.pathname === "/Client/Contact" || 
+    location.pathname === "/Client/AuthForm";
 
   return (
     <Box sx={{ display: "flex" }}>
       {!hideNavAndSidebar && (
-        <>
-          <Navbar
-            sideBarWidth={sideBarWidth}
-            handleDrawerToggle={handleDrawerToggle}
-          />
-          <Sidebar
-            sideBarWidth={sideBarWidth}
-            mobileOpen={mobileOpen}
-            handleDrawerToggle={handleDrawerToggle}
-          />
-        </>
+        <Sidebar
+          sideBarWidth={sideBarWidth}
+          mobileOpen={mobileOpen}
+          handleDrawerToggle={handleDrawerToggle}
+        />
       )}
       <Box
         component="main"
         sx={{
           flexGrow: 1,
           px: { xs: 1, md: 2 },
-          width: { xs: "100%", md: hideNavAndSidebar ? "100%" : `calc(100% - ${sideBarWidth}px)` },
+          width: {
+            xs: "100%",
+            md: hideNavAndSidebar ? "100%" : `calc(100% - ${sideBarWidth}px)`,
+          },
         }}
       >
         <Routes>
           {/* Redirect "/" to "/sign" */}
-          <Route path="/" element={<Navigate to="/sign" />} />
-          <Route path="/sign" element={<SignInSide />} />
+          <Route path="/" element={<Home to="/sign" />} />
+          <Route path="/sign" element={<Home />} />
+          <Route path="Client/AuthForm" element={<AuthForm/>} />
+          <Route path="/Client/About" element={<About/>} />
+          <Route path="/Client/Contact" element={<Contact/>} />
+          <Route path="/Client/project" element={<ProjectInfo/>} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/products" element={<Products />} />
           <Route path="/products/add" element={<AddProduct />} />
@@ -65,11 +81,9 @@ function App() {
           <Route path="/customers/:id" element={<SingleCustomer />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/orders/:id" element={<SingleOrder />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/inbox" element={<Inbox />} />
+          <Route path="/settings" element={<ProjectDetails />} />
+          <Route path="/inbox" element={<SearchProjects />} />
           <Route path="/user_view" element={<UserProfilePage />} />
-
-          
         </Routes>
       </Box>
     </Box>
